@@ -722,7 +722,7 @@ h3, h4, h5, h6 {
 }
 
 .contact-wrapper {
-    max-width: 800px;
+    max-width: 1200px;
     margin: 0 auto;
     margin-bottom: 40px;
 }
@@ -1246,7 +1246,7 @@ h3, h4, h5, h6 {
 /* Mobile: make contact card look like a centered box instead of full-width stretched rectangle */
 @media (max-width: 900px) {
     .contact-card {
-        max-width: 680px;
+        max-width: 1000px;
         margin: 20px auto;
         border-radius: 12px;
         overflow: hidden;
@@ -1397,7 +1397,50 @@ h3, h4, h5, h6 {
         font-size: 14px;
         margin-bottom: 20px;
     }
-    
+}
+
+/* Mobile: further reduce contact form height & paddings for small phones */
+@media (max-width: 420px) {
+    /* make the contact card take more horizontal space */
+    .contact-card {
+        max-width: 100%;
+        width: calc(100% - 16px);
+        margin: 8px auto;
+        border-radius: 10px;
+    }
+
+    /* stack into single column and hide the image to increase form width and reduce overall height */
+    .contact-grid { grid-template-columns: 1fr; }
+    .contact-image { display: none; }
+
+    .contact-form {
+        padding: 10px !important;
+        width: 100%;
+    }
+
+    .form-group { margin-bottom: 12px; }
+
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 14px;
+    }
+
+    /* reduce textarea height to make form shorter */
+    .form-group textarea {
+        min-height: 64px;
+        max-height: 160px;
+    }
+
+    .contact-form .btn-full {
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 10px;
+    }
+
+    /* slightly shorter map on small phones */
+    .map-container { height: 220px; }
+}
     .project-features {
         gap: 8px;
     }
@@ -1407,3 +1450,108 @@ h3, h4, h5, h6 {
         font-size: 11px;
     }
 }
+
+/* Footer: force a single vertical column layout and center items */
+.footer-main {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 20px !important;
+    padding-bottom: 24px !important;
+    margin-bottom: 24px !important;
+    border-bottom: none !important;
+}
+
+.footer-brand,
+.footer-nav,
+.footer-legal,
+.footer-contact {
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.footer-links {
+    display: block !important;
+    gap: 12px !important;
+}
+
+.footer-social { justify-content: center !important; }
+.footer-bottom { text-align: center !important; }
+
+/* Ensure desktop media rules don't reflow footer into columns */
+@media (min-width: 1024px) {
+    .footer-main { grid-template-columns: 1fr !important; display: flex !important; flex-direction: column !important; }
+}
+
+/* Intro splash screen styles */
+.splash {
+    position: fixed;
+    inset: 0;
+    z-index: 4000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Diagonal orange -> dark gradient to match attachment */
+    background: linear-gradient(135deg,
+        #ff8c42 8%,
+        #e86b2a 24%,
+        #c64b26 40%,
+        #4b2f2d 66%,
+        #0b0f17 100%
+    );
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-font-smoothing: antialiased;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.splash::after {
+    /* subtle dotted noise overlay for premium texture */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 1px);
+    background-size: 6px 6px;
+    mix-blend-mode: overlay;
+    /* lower the overlay so the warm orange reads through like the sample */
+    opacity: 0.45;
+    pointer-events: none;
+}
+
+.splash-logo {
+    width: clamp(140px, 22vw, 220px);
+    height: auto;
+    z-index: 4001;
+    filter: drop-shadow(0 12px 24px rgba(0,0,0,0.5));
+    transform-origin: center center;
+    animation: splashLogoAnim 3.6s ease-in-out both infinite;
+}
+
+.splash.hidden {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.98);
+    pointer-events: none;
+}
+
+@keyframes splashLogoAnim {
+    0% {
+        opacity: 0;
+        transform: translateY(14px) scale(0.92) rotate(-6deg);
+    }
+    12% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-8px) scale(1.02) rotate(0deg);
+    }
+    100% {
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+}
+
+@media (max-width: 420px) {
+    .splash-logo { width: clamp(110px, 30vw, 150px); }
+}
+
+
