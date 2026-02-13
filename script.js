@@ -358,6 +358,24 @@ window.addEventListener('load', () => {
             console.log('Video autoplay prevented:', err);
         });
     }
+
+    // Splash screen auto-hide
+    const splash = document.getElementById('splash');
+    if (splash) {
+        // Allow quick dismiss on tap/click
+        splash.addEventListener('click', () => {
+            splash.classList.add('hidden');
+            setTimeout(() => splash.remove(), 700);
+        });
+
+        // Auto hide after a short delay
+        setTimeout(() => {
+            splash.classList.add('hidden');
+            setTimeout(() => {
+                try { splash.remove(); } catch (e) {}
+            }, 700);
+        }, 1400);
+    }
 });
 
 
